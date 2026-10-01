@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  qa-agent:
+    build: .
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+    volumes:
+      - ./reports:/app/reports
+      - ./logs:/app/logs
+      - ./tests:/app/tests
+    command: python -m streamlit run app.py --server.address 0.0.0.0 --server.port 8501
